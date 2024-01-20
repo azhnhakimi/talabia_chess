@@ -62,8 +62,6 @@ public class Tile extends JPanel{
         if(image != null){
             // System.out.println(image.getIconWidth());
             JLabel label = new JLabel(image);
-            label.setBackground(new Color(0x0000ff));
-            label.setOpaque(true);
             this.add(label);
         }
     }
