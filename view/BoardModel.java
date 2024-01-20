@@ -7,6 +7,7 @@ import model.Position;
 import model.pieces.Piece;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class BoardModel extends JPanel {
@@ -62,6 +63,10 @@ public class BoardModel extends JPanel {
         }
     }
 
+    public void testFunc(){
+        System.out.println("hello word");
+    }
+
 
     // draws the current position of the pieces (add them) onto the board
     public void draw() {
@@ -76,8 +81,10 @@ public class BoardModel extends JPanel {
                 if (piece != null) {
                     String pieceType = piece.getPieceType();
                     String casedPieceType = Character.toUpperCase(pieceType.charAt(0)) + pieceType.substring(1);
-                    String filePath = "./assets/" + piece.getColour() + casedPieceType + ".png";
+                    String filePath = "assets" + File.separator + piece.getColour() + casedPieceType + ".png";
                     ImageIcon image = new ImageIcon(filePath);
+
+                    System.out.println(image.getIconWidth());
 
                     piece.setCurrentPosition(new Position(i, j));
     

@@ -34,6 +34,7 @@ public class Tile extends JPanel{
         this.setBorder(new LineBorder(Color.BLACK, 1));
         this.setLayout(new BorderLayout());
 
+        
     }
 
     public Position getPosition(){
@@ -59,10 +60,10 @@ public class Tile extends JPanel{
     public void setImage(ImageIcon image) {
         this.image = image;
         if(image != null){
+            // System.out.println(image.getIconWidth());
             JLabel label = new JLabel(image);
-            // label.setBackground(new Color(0xEDD6B3));
-            // label.setOpaque(true);
-            this.add(label, BorderLayout.CENTER);
+            label.setBackground(new Color(0x0000ff));
+            label.setOpaque(true);
             this.add(label);
         }
     }
