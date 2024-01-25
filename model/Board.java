@@ -1,4 +1,5 @@
 package model;
+
 import model.pieces.Hourglass;
 import model.pieces.Piece;
 import model.pieces.Plus;
@@ -7,79 +8,66 @@ import model.pieces.Sun;
 import model.pieces.Time;
 
 public class Board {
-    
+
     private Piece[][] boardTiles;
 
-    public Board(){
+    public Board() {
         this.boardTiles = new Piece[6][7];
         initializeBoard();
     }
 
-    public void addPiece(int row, int column, Piece piece){
+    public void addPiece(int row, int column, Piece piece) {
         boardTiles[row][column] = piece;
+        piece.setCurrentPosition(new Position(row, column)); // Set the piece's current position
     }
 
-    public void removePiece(int tilePosition){
-        
+    public void removePiece(int row, int column) {
+        boardTiles[row][column] = null;
     }
 
-    public Piece getPiece(int row, int column){
+    public Piece getPiece(int row, int column) {
         return boardTiles[row][column];
     }
 
-    public Piece[][] getBoardTiles(){
+    public Piece[][] getBoardTiles() {
         return this.boardTiles;
     }
 
-    public void flipBoard(int playerTurn){
-        
+    public void flipBoard(int playerTurn) {
+        // Flip board logic if required
     }
 
-    public void initializeBoard(){
+    public void initializeBoard() {
         System.out.println("Begin the game!");
-        /*
-         * the approach with this, is a function that sets up a new board and adds the pieces in their initial position
-         */
 
-         // initialize black pieces
-        boardTiles[0][0] = new Plus("black");
-        boardTiles[0][1] = new Hourglass("black");
-        boardTiles[0][2] = new Time("black");
-        boardTiles[0][3] = new Sun("black");
-        boardTiles[0][4] = new Time("black");
-        boardTiles[0][5] = new Hourglass("black");
-        boardTiles[0][6] = new Plus("black");
+        // Initialize black pieces
+        for (int col = 0; col < 7; col++) {
+            addPiece(0, col, getNewPiece("black", col));
+            addPiece(1, col, new Point("black"));
+        }
 
-        boardTiles[1][0] = new Point("black");
-        boardTiles[1][1] = new Point("black");
-        boardTiles[1][2] = new Point("black");
-        boardTiles[1][3] = new Point("black");
-        boardTiles[1][4] = new Point("black");
-        boardTiles[1][5] = new Point("black");
-        boardTiles[1][6] = new Point("black");
-
-
-        // initialize white pieces
-        boardTiles[4][0] = new Point("white");
-        boardTiles[4][1] = new Point("white");
-        boardTiles[4][2] = new Point("white");
-        boardTiles[4][3] = new Point("white");
-        boardTiles[4][4] = new Point("white");
-        boardTiles[4][5] = new Point("white");
-        boardTiles[4][6] = new Point("white");
-
-        boardTiles[5][0] = new Plus("white");
-        boardTiles[5][1] = new Hourglass("white");
-        boardTiles[5][2] = new Time("white");
-        boardTiles[5][3] = new Sun("white");
-        boardTiles[5][4] = new Time("white");
-        boardTiles[5][5] = new Hourglass("white");
-        boardTiles[5][6] = new Plus("white");
-
+        // Initialize white pieces
+        for (int col = 0; col < 7; col++) {
+            addPiece(4, col, new Point("white"));
+            addPiece(5, col, getNewPiece("white", col));
+        }
     }
 
-    public void printBoard(){
-        
+    private Piece getNewPiece(String color, int col) {
+        switch (col) {
+            case 0:
+            case 6:
+                return new Plus(color);
+            case 1:
+            case 5:
+                return new Hourglass(color);
+            case 2:
+            case 4:
+                return new Time(color);
+            case 3:
+                return new Sun(color);
+            default:
+                return null; // Should never happen
+        }
     }
-    
 }

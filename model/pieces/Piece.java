@@ -1,18 +1,21 @@
 package model.pieces;
 
 import java.util.ArrayList;
-
 import model.Position;
 
-public abstract class  Piece {
+public abstract class Piece {
     
     private String colour;
     private String pieceType;
     private Position currentPosition = null;
 
-
     public Piece(String colour){
         this.colour = colour;
+    }
+
+    public void moveTo(Position newPosition) {
+        this.currentPosition = newPosition;
+        System.out.println("Moved " + this.pieceType + " to [" + newPosition.getRow() + ", " + newPosition.getColumn() + "]");
     }
 
     public void setCurrentPosition(Position position){
@@ -36,5 +39,4 @@ public abstract class  Piece {
     public void setPieceType(String pieceType){
         this.pieceType = pieceType;
     }
-    
 }
