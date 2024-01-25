@@ -27,21 +27,11 @@ public class Point extends Piece {
         int direction = (this.getColour().equals("white")) ? -1 : 1;
 
         // Point can move 1 step forward
-        addMoveIfValid(possibleMoves, row + direction, column);
+        possibleMoves.add(new Position(row + direction, column));
 
-        // Point can move 2 steps forward 
-        addMoveIfValid(possibleMoves, row + 2 * direction, column);
+        // Point can move 2 steps forward from any position
+        possibleMoves.add(new Position(row + 2 * direction, column));
 
         return possibleMoves;
-    }
-
-    private void addMoveIfValid(ArrayList<Position> moves, int row, int column) {
-        if (isWithinBounds(row, column)) {
-            moves.add(new Position(row, column));
-        }
-    }
-
-    private boolean isWithinBounds(int row, int column) {
-        return row >= 0 && row < 6 && column >= 0 && column < 7;
     }
 }
