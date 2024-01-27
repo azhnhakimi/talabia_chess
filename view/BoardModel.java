@@ -111,14 +111,34 @@ public class BoardModel extends JPanel {
     }
 
     // Method to switch the current player
-    private void  switchPlayerTurn() {
+    private void switchPlayerTurn() {
         currentPlayer = (currentPlayer.equals("white")) ? "black" : "white";
+        flipBoard();
     }
+    
 
     public void draw() {
         removeAll();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+        int startRow, endRow, rowIncrement, startColumn, endColumn, columnIncrement;
+    
+        if (flipped) {
+            startRow = rows - 1;
+            endRow = -1;
+            rowIncrement = -1;
+            startColumn = columns - 1;
+            endColumn = -1;
+            columnIncrement = -1;
+        } else {
+            startRow = 0;
+            endRow = rows;
+            rowIncrement = 1;
+            startColumn = 0;
+            endColumn = columns;
+            columnIncrement = 1;
+        }
+    
+        for (int i = startRow; i != endRow; i += rowIncrement) {
+            for (int j = startColumn; j != endColumn; j += columnIncrement) {
                 Piece piece = board.getPiece(i, j);
                 Tile tile = tiles[i][j];
                 if (piece != null) {
@@ -139,10 +159,9 @@ public class BoardModel extends JPanel {
         repaint();
     }
 
-    public void flipBoard(int playerTurn) {
-        if (playerTurn != 1) {
-            flipped = !flipped;
-            draw();
-        }
+    public void flipBoard() {
+        flipped = !flipped;
+        draw();
     }
+    
 }
