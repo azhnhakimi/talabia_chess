@@ -12,7 +12,6 @@ import model.Position;
 import model.pieces.Piece;
 
 public class Tile extends JPanel {
-
     Piece piece;
     ImageIcon image;
     Position position;
@@ -24,16 +23,16 @@ public class Tile extends JPanel {
         this.image = image;
         this.position = position;
         this.boardModel = boardModel;
-        this.setBackground(new Color(0xEDD6B3));
-        this.addMouseListener(new ClickListener());
-        this.setOpaque(true);
-        this.setBorder(new LineBorder(Color.BLACK, 1));
-        this.setLayout(new BorderLayout());
-        this.possibleMoves = new ArrayList<>();
+        setBackground(new Color(0xEDD6B3));
+        addMouseListener(new ClickListener());
+        setOpaque(true);
+        setBorder(new LineBorder(Color.BLACK, 1));
+        setLayout(new BorderLayout());
+        possibleMoves = new ArrayList<>();
     }
 
     public Position getPosition() {
-        return this.position;
+        return position;
     }
 
     public void setPosition(Position position) {
@@ -49,11 +48,7 @@ public class Tile extends JPanel {
     }
 
     public Piece getPiece() {
-        return this.piece;
-    }
-
-    public ArrayList<Position> getPossibleMoves() {
-        return this.possibleMoves;
+        return piece;
     }
 
     public void setImage(ImageIcon image) {
@@ -71,26 +66,26 @@ public class Tile extends JPanel {
         repaint();
     }
 
-    public void movePieceTo(Tile newTile) {
-        Piece movingPiece = this.piece;
-        this.setPiece(null); // Remove piece from current tile
-        newTile.setPiece(movingPiece); // Set piece on the new tile
-        if (movingPiece != null) {
-            movingPiece.moveTo(newTile.getPosition()); // Update piece's position
-        }
-        boardModel.draw(); // Redraw the board to reflect the move
-    }
-
     private class ClickListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (piece != null) {
-                possibleMoves = piece.getPossibleMoves();
-                boardModel.seePossibleMoves(possibleMoves, Tile.this);
-                boardModel.setHasMovedPiece(true, Tile.this);
-            } else if (boardModel.hasMovedPiece() && Tile.this.getBackground().equals(new Color(0x00ff00))) {
+            if (boardModel.hasMovedPiece() && getBackground().equals(new Color(0x00ff00))) {
+                // If it's a valid move, move the piece
                 boardModel.movePieceTo(Tile.this);
                 boardModel.setHasMovedPiece(false, null);
+            } else {
+                // If another piece was selected, reset the selection
+                if (boardModel.hasMovedPiece()) {
+                    boardModel.setHasMovedPiece(false, null);
+                    boardModel.resetTileBackgrounds();
+                }
+
+                // If the clicked tile has a piece and it's the current player's turn
+                if (piece != null && piece.getColour().equals(boardModel.getCurrentPlayer())) {
+                    possibleMoves = piece.getPossibleMoves();
+                    boardModel.seePossibleMoves(possibleMoves, Tile.this);
+                    boardModel.setHasMovedPiece(true, Tile.this);
+                }
             }
         }
     }

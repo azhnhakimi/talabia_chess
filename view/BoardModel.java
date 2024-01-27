@@ -1,10 +1,10 @@
 package view;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 import model.Board;
 import model.Position;
 import model.pieces.Piece;
+
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -12,31 +12,32 @@ import java.util.ArrayList;
 public class BoardModel extends JPanel {
 
     Board board;
-
     int rows;
     int columns;
     boolean flipped = false;
     boolean hasMovedPiece = false;
     Tile[][] tiles;
-
     Position currentPosition;
     Tile clickedTile;
+    private String currentPlayer; // Variable to keep track of the current player's turn
 
     public BoardModel(int rows, int columns, Board board) {
         this.rows = rows;
         this.columns = columns;
-        this.setLayout(new GridLayout(this.rows, this.columns, 0, 0));
-        this.setBackground(new Color(0xEDD6B3));
-        this.setOpaque(true);
         this.board = board;
+        this.currentPlayer = "white"; // white starts the game
+        setLayout(new GridLayout(this.rows, this.columns, 0, 0));
+        setBackground(new Color(0xEDD6B3));
+        setOpaque(true);
+        initializeTiles();
+    }
 
+    private void initializeTiles() {
         tiles = new Tile[rows][columns];
-
-        // Initialize the Tile objects
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 tiles[i][j] = new Tile(null, null, new Position(i, j), this);
-                this.add(tiles[i][j]);
+                add(tiles[i][j]);
             }
         }
     }
@@ -49,8 +50,7 @@ public class BoardModel extends JPanel {
         this.hasMovedPiece = hasMoved;
         this.clickedTile = clicked; // Save the tile that was clicked
     }
-    
-    // Add a getter for clickedTile
+
     public Tile getClickedTile() {
         return clickedTile;
     }
@@ -69,20 +69,30 @@ public class BoardModel extends JPanel {
         if (destinationTile.getBackground().equals(new Color(0x00ff00))) {
             Position startPos = clickedTile.getPosition();
             Position endPos = destinationTile.getPosition();
-
-            Piece piece = board.getPiece(startPos.getRow(), startPos.getColumn());
-            board.removePiece(startPos.getRow(), startPos.getColumn());
-            board.addPiece(endPos.getRow(), endPos.getColumn(), piece);
-
-            clickedTile.setPiece(null);
-            destinationTile.setPiece(piece);
-            setHasMovedPiece(false, null);
-            resetTileBackgrounds();
-            draw();
+    
+            Piece movingPiece = board.getPiece(startPos.getRow(), startPos.getColumn());
+            Piece targetPiece = board.getPiece(endPos.getRow(), endPos.getColumn());
+    
+            // Check if the target tile is occupied by a piece of the same color
+            if (targetPiece != null && movingPiece.getColour().equals(targetPiece.getColour())) {
+                return; // Do not allow capturing own pieces
+            }
+    
+            if (movingPiece != null && movingPiece.getColour().equals(currentPlayer)) {
+                board.removePiece(startPos.getRow(), startPos.getColumn());
+                board.addPiece(endPos.getRow(), endPos.getColumn(), movingPiece);
+    
+                clickedTile.setPiece(null);
+                destinationTile.setPiece(movingPiece);
+                setHasMovedPiece(false, null);
+                switchPlayerTurn(); // Switch the player turn
+                resetTileBackgrounds();
+                draw();
+            }
         }
     }
 
-    private void resetTileBackgrounds() {
+    public void resetTileBackgrounds() {
         for (Tile[] row : tiles) {
             for (Tile tile : row) {
                 tile.setBackground(new Color(0xEDD6B3));
@@ -90,11 +100,19 @@ public class BoardModel extends JPanel {
         }
     }
 
-    
-
     private boolean isValidPosition(Position position) {
         return position.getRow() >= 0 && position.getRow() < rows &&
                position.getColumn() >= 0 && position.getColumn() < columns;
+    }
+
+    // Method to get the current player
+    public String getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    // Method to switch the current player
+    private void  switchPlayerTurn() {
+        currentPlayer = (currentPlayer.equals("white")) ? "black" : "white";
     }
 
     public void draw() {
