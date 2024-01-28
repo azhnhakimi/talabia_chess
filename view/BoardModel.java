@@ -5,7 +5,9 @@ import model.Board;
 import model.Position;
 import model.pieces.Hourglass;
 import model.pieces.Piece;
+import model.pieces.Plus;
 import model.pieces.Sun;
+import model.pieces.Time;
 import model.pieces.Point;
 
 import java.awt.*;
@@ -170,19 +172,19 @@ public class BoardModel extends JPanel {
 
     // Helper method to rotate an ImageIcon
     public ImageIcon rotateImageIcon(ImageIcon icon, double degrees) {
-    int width = icon.getIconWidth();
-    int height = icon.getIconHeight();
-    int type = BufferedImage.TYPE_INT_ARGB; 
-    BufferedImage image = new BufferedImage(height, width, type);
-    Graphics2D g2 = image.createGraphics();
-    double x = (height - width)/2.0;
-    double y = (width - height)/2.0;
-    AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-    at.rotate(Math.toRadians(degrees), width/2.0, height/2.0);
-    g2.drawImage(icon.getImage(), at, null);
-    g2.dispose();
-    return new ImageIcon(image);
-}
+        int width = icon.getIconWidth();
+        int height = icon.getIconHeight();
+        int type = BufferedImage.TYPE_INT_ARGB; 
+        BufferedImage image = new BufferedImage(height, width, type);
+        Graphics2D g2 = image.createGraphics();
+        double x = (height - width)/2.0;
+        double y = (width - height)/2.0;
+        AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+        at.rotate(Math.toRadians(degrees), width/2.0, height/2.0);
+        g2.drawImage(icon.getImage(), at, null);
+        g2.dispose();
+        return new ImageIcon(image);
+    }
 
     public void draw() {
         removeAll();
@@ -236,21 +238,25 @@ public class BoardModel extends JPanel {
         if(turnCount >= 8){
             switchPieceTypes();
             turnCount = 1;
+            return;
         }
         turnCount++;
     }
     
     private void switchPieceTypes() {
         // Iterate through all pieces on the board and switch their types
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Piece piece = board.getPiece(i, j);
                 if (piece != null) {
-                    // Switch between Time and Plus pieces
+                    String pieceColor = piece.getColour();
                     if (piece.getPieceType().equals("time")) {
-                        piece.setPieceType("plus");
+                        board.removePiece(i, j);
+                        board.addPiece(i, j, new Plus(pieceColor));
                     } else if (piece.getPieceType().equals("plus")) {
-                        piece.setPieceType("time");
+                        board.removePiece(i, j);
+                        board.addPiece(i, j, new Time(pieceColor));
                     }
                 }
             }

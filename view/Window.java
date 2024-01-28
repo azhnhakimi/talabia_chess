@@ -62,6 +62,8 @@ public class Window extends JFrame{
             Dimension newDimensions = getNewBoardDimensions(boardModel);
             boardModel.setBounds((int) newBounds.getWidth(), (int) newBounds.getHeight(),
                     (int) newDimensions.getWidth(), (int) newDimensions.getHeight());
+            revalidate();
+            repaint();
         });
     }
 
