@@ -24,6 +24,7 @@ public class BoardModel extends JPanel {
     Tile[][] tiles;
     Position currentPosition;
     Tile clickedTile;
+    public int turnCount = 1;
     private String currentPlayer; // Variable to keep track of the current player's turn
 
     public BoardModel(int rows, int columns, Board board) {
@@ -232,9 +233,30 @@ public class BoardModel extends JPanel {
         }
         revalidate();
         repaint();
+        if(turnCount >= 8){
+            switchPieceTypes();
+            turnCount = 1;
+        }
+        turnCount++;
     }
     
-
+    private void switchPieceTypes() {
+        // Iterate through all pieces on the board and switch their types
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Piece piece = board.getPiece(i, j);
+                if (piece != null) {
+                    // Switch between Time and Plus pieces
+                    if (piece.getPieceType().equals("time")) {
+                        piece.setPieceType("plus");
+                    } else if (piece.getPieceType().equals("plus")) {
+                        piece.setPieceType("time");
+                    }
+                }
+            }
+        }
+    }
+    
     public void flipBoard() {
         flipped = !flipped;
         draw();
