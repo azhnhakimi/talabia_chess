@@ -27,10 +27,10 @@ public class Window extends JFrame{
         this.addComponentListener(new ResizeAdapter(this));
         this.addWindowStateListener(this::handleWindowStateChange);
         getContentPane().setBackground(new Color(0x292625));
-        this.setJMenuBar(new MenuBar());
         
         createNewGame();
         
+        this.setJMenuBar(new MenuBar(this.game.getBoard(), this.boardModel));
         
         resizeContentPanel();
         this.setVisible(true);

@@ -17,8 +17,12 @@ public class Board {
     }
 
     public void addPiece(int row, int column, Piece piece) {
-        boardTiles[row][column] = piece;
-        piece.setCurrentPosition(new Position(row, column)); // Set the piece's current position
+        if(piece == null){
+            boardTiles[row][column] = null;
+        }else{
+            boardTiles[row][column] = piece;
+            piece.setCurrentPosition(new Position(row, column)); // Set the piece's current position
+        }
     }
 
     public void removePiece(int row, int column) {
@@ -70,4 +74,13 @@ public class Board {
                 return null; // Should never happen
         }
     }
+
+    public void clearBoard(){
+        for(int row = 0; row < 6; row++){
+            for(int col = 0; col < 7; col++){
+                boardTiles[row][col] = null;
+            }
+        }
+    }
+
 }
