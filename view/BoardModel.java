@@ -3,9 +3,14 @@ package view;
 import javax.swing.*;
 import model.Board;
 import model.Position;
+import model.pieces.Hourglass;
 import model.pieces.Piece;
+import model.pieces.Sun;
+import model.pieces.Point;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -58,25 +63,45 @@ public class BoardModel extends JPanel {
     public void seePossibleMoves(ArrayList<Position> possiblePositions, Tile tileClickedOn) {
         resetTileBackgrounds();
         this.clickedTile = tileClickedOn;
+        Piece movingPiece = clickedTile.getPiece(); // Get the piece from the clicked tile
+    
         for (Position pos : possiblePositions) {
+            // First, check if the position is valid and within the board limits
             if (isValidPosition(pos)) {
-                tiles[pos.getRow()][pos.getColumn()].setBackground(new Color(0x00ff00));
+                Piece targetPiece = board.getPiece(pos.getRow(), pos.getColumn());
+                
+                // Check if the target tile is not occupied by a piece of the same color
+                if (targetPiece == null || !movingPiece.getColour().equals(targetPiece.getColour())) {
+                    // Then, check if the path to that position is clear (for non-Hourglass pieces)
+                    if (movingPiece instanceof Hourglass || isPathClear(clickedTile.getPosition(), pos, movingPiece)) {
+                        tiles[pos.getRow()][pos.getColumn()].setBackground(new Color(0x00ff00));
+                    }
+                }
             }
         }
     }
-
+    
     public void movePieceTo(Tile destinationTile) {
         if (destinationTile.getBackground().equals(new Color(0x00ff00))) {
             Position startPos = clickedTile.getPosition();
             Position endPos = destinationTile.getPosition();
-    
+
             Piece movingPiece = board.getPiece(startPos.getRow(), startPos.getColumn());
             Piece targetPiece = board.getPiece(endPos.getRow(), endPos.getColumn());
+
+            if (!(movingPiece instanceof Hourglass) && !isPathClear(startPos, endPos, movingPiece)) {
+                return; // If the path is not clear and the piece is not an Hourglass, don't move
+            }
     
             // Check if the target tile is occupied by a piece of the same color
             if (targetPiece != null && movingPiece.getColour().equals(targetPiece.getColour())) {
                 return; // Do not allow capturing own pieces
             }
+
+            if (targetPiece != null && targetPiece instanceof Sun) {
+            endGame(); // Call a method to handle the end of the game
+            return;
+        }
     
             if (movingPiece != null && movingPiece.getColour().equals(currentPlayer)) {
                 board.removePiece(startPos.getRow(), startPos.getColumn());
@@ -90,6 +115,26 @@ public class BoardModel extends JPanel {
                 draw();
             }
         }
+    }
+
+    private boolean isPathClear(Position start, Position end, Piece movingPiece) {
+        // Calculate the direction of movement
+        int rowDirection = Integer.compare(end.getRow(), start.getRow());
+        int colDirection = Integer.compare(end.getColumn(), start.getColumn());
+
+        int currentRow = start.getRow() + rowDirection;
+        int currentCol = start.getColumn() + colDirection;
+
+        while ((currentRow != end.getRow()) || (currentCol != end.getColumn())) {
+            if (board.getPiece(currentRow, currentCol) != null) {
+                return false; // Found a piece in the path
+            }
+
+            currentRow += rowDirection;
+            currentCol += colDirection;
+        }
+
+        return true; // Path is clear
     }
 
     public void resetTileBackgrounds() {
@@ -115,7 +160,28 @@ public class BoardModel extends JPanel {
         currentPlayer = (currentPlayer.equals("white")) ? "black" : "white";
         flipBoard();
     }
-    
+
+    private void endGame() {
+        // Display a dialog box indicating the game is over and which player won
+        JOptionPane.showMessageDialog(this, "HABIS DAHH!!!! " + currentPlayer.toUpperCase() + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
+    }
+
+    // Helper method to rotate an ImageIcon
+    public ImageIcon rotateImageIcon(ImageIcon icon, double degrees) {
+    int width = icon.getIconWidth();
+    int height = icon.getIconHeight();
+    int type = BufferedImage.TYPE_INT_ARGB; 
+    BufferedImage image = new BufferedImage(height, width, type);
+    Graphics2D g2 = image.createGraphics();
+    double x = (height - width)/2.0;
+    double y = (width - height)/2.0;
+    AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+    at.rotate(Math.toRadians(degrees), width/2.0, height/2.0);
+    g2.drawImage(icon.getImage(), at, null);
+    g2.dispose();
+    return new ImageIcon(image);
+}
 
     public void draw() {
         removeAll();
@@ -146,6 +212,15 @@ public class BoardModel extends JPanel {
                     String casedPieceType = Character.toUpperCase(pieceType.charAt(0)) + pieceType.substring(1);
                     String filePath = "assets" + File.separator + piece.getColour() + casedPieceType + ".png";
                     ImageIcon image = new ImageIcon(filePath);
+    
+                // Check if the piece is a 'point' and is rotated
+                    if (pieceType.equals("point") && ((Point) piece).isRotated()) {
+                        image = rotateImageIcon(image, 180);
+                    }
+
+                    if (flipped) {
+                        image = rotateImageIcon(image, 180);
+                    }
                     tile.setPiece(piece);
                     tile.setImage(image);
                 } else {
@@ -158,6 +233,7 @@ public class BoardModel extends JPanel {
         revalidate();
         repaint();
     }
+    
 
     public void flipBoard() {
         flipped = !flipped;
