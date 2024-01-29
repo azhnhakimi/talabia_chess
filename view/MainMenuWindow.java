@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+// Explanation
+
 public class MainMenuWindow extends JFrame {
 
     private JPanelGradient jPanelGradient;
@@ -25,6 +27,8 @@ public class MainMenuWindow extends JFrame {
         initComponents();
     }
 
+    // Explanation
+    // Worked on by : 
     private void initComponents(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -117,15 +121,21 @@ public class MainMenuWindow extends JFrame {
         pack();
     }
 
+    // Perform action when newGameBtn is clicked
+    // Worked on by : Azhan
     private void newGameMouseClicked(MouseEvent e){
         new Window();
     }
 
+    // Perform action when loadGameBtn is clicked
+    // Worked on by : Azhan
     private void loadGameActionPerformed(ActionEvent e){
         Window window = new Window();
         window.loadOldGame();
     }
 
+    // Perform action when tutorialBtn is clicked
+    // Worked on by : Azhan
     private void tutorialMouseClicked(MouseEvent e){
         new TutorialFrame();
     }

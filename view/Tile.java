@@ -11,34 +11,42 @@ import java.awt.*;
 import model.Position;
 import model.pieces.Piece;
 
+// Tile class is the graphical representaion of each individual tile on a game board
+
 public class Tile extends JPanel {
-    Piece piece;
-    ImageIcon image;
-    Position position;
-    BoardModel boardModel;
-    ArrayList<Position> possibleMoves;
+    private Piece piece;
+    private ImageIcon image;
+    private Position position;
+    private BoardModel boardModel;
+    private ArrayList<Position> possibleMoves;
 
     public Tile(Piece piece, ImageIcon image, Position position, BoardModel boardModel) {
         this.piece = piece;
         this.image = image;
         this.position = position;
         this.boardModel = boardModel;
+        this.possibleMoves = new ArrayList<>();
         setBackground(new Color(0xEDD6B3));
         addMouseListener(new ClickListener());
         setOpaque(true);
         setBorder(new LineBorder(Color.BLACK, 1));
         setLayout(new BorderLayout());
-        possibleMoves = new ArrayList<>();
     }
 
+    // Gets the position in which the tile is on
+    // Worked on by :
     public Position getPosition() {
         return position;
     }
 
+    // Explanation
+    // Worked on by : 
     public void setPosition(Position position) {
         this.position = position;
     }
 
+    // Explanation
+    // Worked on by : 
     public void setPiece(Piece piece) {
         this.piece = piece;
         if (this.piece != null) {
@@ -47,15 +55,21 @@ public class Tile extends JPanel {
         updateImage();
     }
 
+    // Explanation
+    // Worked on by : 
     public Piece getPiece() {
         return piece;
     }
 
+    // Explanation
+    // Worked on by : 
     public void setImage(ImageIcon image) {
         this.image = image;
         updateImage();
     }
 
+    // Explanation
+    // Worked on by : 
     private void updateImage() {
         removeAll();
         if (image != null) {
@@ -66,6 +80,8 @@ public class Tile extends JPanel {
         repaint();
     }
 
+    // Explanation
+    // Worked on by : 
     private class ClickListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {

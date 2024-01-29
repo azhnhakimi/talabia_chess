@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 import model.Position;
 
+// Time class represents the Time piece in the game
+// Class created by : Azhan
+
 public class Time extends Piece {
     
     String pieceType = "time";
@@ -14,6 +17,7 @@ public class Time extends Piece {
         super.setPieceType(this.pieceType);
     }
 
+    // Gets the possible moves that the Time piece can move
     @Override
     public ArrayList<Position> getPossibleMoves() {
         Position position = this.getCurrentPosition();
@@ -43,7 +47,6 @@ public class Time extends Piece {
             new Position(row - 4, column + 4),
             new Position(row - 5, column + 5)
         ));
-
         return possibleMoves;
     }
     

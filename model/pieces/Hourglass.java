@@ -5,16 +5,21 @@ import java.util.Arrays;
 
 import model.Position;
 
+// Hourglass class represents the Hourglass piece in the game
+// Class created by : Azhan
+
 public class Hourglass extends Piece{
 
-    String pieceType = "hourglass";
+    private String pieceType = "hourglass";
     
     public Hourglass(String color){
         super(color);
         super.setPieceType(this.pieceType);
     }
 
-        public ArrayList<Position> getPossibleMoves(){
+    // Gets the possible moves that the Hourglass piece can move
+    @Override
+    public ArrayList<Position> getPossibleMoves(){
         Position position = this.getCurrentPosition();
 
         int row = position.getRow();
@@ -32,7 +37,6 @@ public class Hourglass extends Piece{
         ));
 
         return possibleMoves;
-        
     }
     
 }

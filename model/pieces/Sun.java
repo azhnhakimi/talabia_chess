@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 import model.Position;
 
+// Sun class represents the Sun piece in the game
+// Class created by : Azhan
+
 public class Sun extends Piece{
     
     String pieceType = "sun";
@@ -14,7 +17,8 @@ public class Sun extends Piece{
         super.setPieceType(this.pieceType);
     }
 
-        public ArrayList<Position> getPossibleMoves(){
+    // Gets the possible moves that the Sun piece can move
+    public ArrayList<Position> getPossibleMoves(){
         Position position = this.getCurrentPosition();
 
         int row = position.getRow();
@@ -28,11 +32,9 @@ public class Sun extends Piece{
             new Position(row - 1, column - 1),  // move left diagonal up
             new Position(row - 1, column + 1),  // move right diagonal up
             new Position(row + 1, column - 1),  // move left diagonal down
-            new Position(row + 1, column + 1)   // mvoe right diagonal down
+            new Position(row + 1, column + 1)   // move right diagonal down
         ));
-
         return possibleMoves;
-        
     }
     
 }

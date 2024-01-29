@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+// Displays the Tutorial Frame when option in main menu is selected
+
 public class TutorialFrame extends JFrame{
 
     private JLabel label;
@@ -18,6 +20,8 @@ public class TutorialFrame extends JFrame{
         initComponents();
     }
 
+    // Explanation
+    // Worked on by : 
     private void initComponents(){
 
         // this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

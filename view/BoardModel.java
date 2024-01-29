@@ -16,19 +16,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
+// BoardModel class is the graphical representation of the Board class
+
 public class BoardModel extends JPanel {
 
-    JFrame frame;
-    Board board;
-    int rows;
-    int columns;
-    boolean flipped = false;
-    boolean hasMovedPiece = false;
-    Tile[][] tiles;
-    Position currentPosition;
-    Tile clickedTile;
+    private JFrame frame;
+    private Board board;
+    private int rows;
+    private int columns;
+    private boolean flipped = false;
+    private boolean hasMovedPiece = false;
+    private Tile[][] tiles;
+    private Tile clickedTile;
     public int turnCount = 1;
-    private String currentPlayer; // Variable to keep track of the current player's turn
+    private String currentPlayer; 
 
     public BoardModel(int rows, int columns, Board board) {
         this.rows = rows;
@@ -41,6 +42,8 @@ public class BoardModel extends JPanel {
         initializeTiles();
     }
 
+    // Initialize all the tiles on the board model when first starting the game
+    // Worked on by : Azhan
     private void initializeTiles() {
         tiles = new Tile[rows][columns];
         for (int i = 0; i < rows; i++) {
@@ -51,32 +54,30 @@ public class BoardModel extends JPanel {
         }
     }
 
+    // Explanation
+    // Worked on by : 
     public boolean hasMovedPiece() {
         return hasMovedPiece;
     }
 
+    // Explanation
+    // Worked on by : 
     public void setHasMovedPiece(boolean hasMoved, Tile clicked) {
         this.hasMovedPiece = hasMoved;
-        this.clickedTile = clicked; // Save the tile that was clicked
-    }
+        this.clickedTile = clicked; 
+    } 
 
-    public Tile getClickedTile() {
-        return clickedTile;
-    }
-
+    // Shows visibly on the tiles where a piece can move to 
+    // Worked on by : 
     public void seePossibleMoves(ArrayList<Position> possiblePositions, Tile tileClickedOn) {
         resetTileBackgrounds();
         this.clickedTile = tileClickedOn;
-        Piece movingPiece = clickedTile.getPiece(); // Get the piece from the clicked tile
+        Piece movingPiece = clickedTile.getPiece(); 
     
         for (Position pos : possiblePositions) {
-            // First, check if the position is valid and within the board limits
             if (isValidPosition(pos)) {
                 Piece targetPiece = board.getPiece(pos.getRow(), pos.getColumn());
-                
-                // Check if the target tile is not occupied by a piece of the same color
                 if (targetPiece == null || !movingPiece.getColour().equals(targetPiece.getColour())) {
-                    // Then, check if the path to that position is clear (for non-Hourglass pieces)
                     if (movingPiece instanceof Hourglass || isPathClear(clickedTile.getPosition(), pos, movingPiece)) {
                         tiles[pos.getRow()][pos.getColumn()].setBackground(new Color(0x00ff00));
                     }
@@ -84,7 +85,9 @@ public class BoardModel extends JPanel {
             }
         }
     }
-    
+
+    // Explanation
+    // Worked on by : 
     public void movePieceTo(Tile destinationTile) {
         if (destinationTile.getBackground().equals(new Color(0x00ff00))) {
             Position startPos = clickedTile.getPosition();
@@ -121,6 +124,8 @@ public class BoardModel extends JPanel {
         }
     }
 
+    // Explanation
+    // Worked on by : 
     private boolean isPathClear(Position start, Position end, Piece movingPiece) {
         // Calculate the direction of movement
         int rowDirection = Integer.compare(end.getRow(), start.getRow());
@@ -141,6 +146,8 @@ public class BoardModel extends JPanel {
         return true; // Path is clear
     }
 
+    // Explanation
+    // Worked on by : 
     public void resetTileBackgrounds() {
         for (Tile[] row : tiles) {
             for (Tile tile : row) {
@@ -149,33 +156,40 @@ public class BoardModel extends JPanel {
         }
     }
 
+    // Explanation
+    // Worked on by : 
     private boolean isValidPosition(Position position) {
         return position.getRow() >= 0 && position.getRow() < rows && position.getColumn() >= 0 && position.getColumn() < columns;
     }
 
     // Method to get the current player
+    // Worked on by : 
     public String getCurrentPlayer() {
         return currentPlayer;
     }
 
+    // Explanation
+    // Worked on by : 
     public void setCurrentPlayer(String currentPlayer){
         this.currentPlayer = currentPlayer;
     }
 
     // Method to switch the current player
+    // Worked on by : 
     private void switchPlayerTurn() {
         currentPlayer = (currentPlayer.equals("white")) ? "black" : "white";
         flipBoard();
     }
 
+    // Shows a message dialog when game has ended
+    // Worked on by : Azhan
     private void endGame() {
-        // Display a dialog box indicating the game is over and which player won
         JOptionPane.showMessageDialog(this, "Winner Winner Chicken Dinner! " + currentPlayer.toUpperCase() + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
         frame.dispose();
-        // System.exit(0);
     }
 
     // Helper method to rotate an ImageIcon
+    // Worked on by : 
     public ImageIcon rotateImageIcon(ImageIcon icon, double degrees) {
         int width = icon.getIconWidth();
         int height = icon.getIconHeight();
@@ -191,6 +205,8 @@ public class BoardModel extends JPanel {
         return new ImageIcon(image);
     }
 
+    // Draws the pieces, tiles onto the board
+    // Worked on by : Azhan
     public void draw() {
         removeAll();
         int startRow, endRow, rowIncrement, startColumn, endColumn, columnIncrement;
@@ -254,9 +270,9 @@ public class BoardModel extends JPanel {
         turnCount++;
     }
     
+    // Iterate through all pieces on the board and switch their types
+    // Worked on by : 
     private void switchPieceTypes() {
-        // Iterate through all pieces on the board and switch their types
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Piece piece = board.getPiece(i, j);
@@ -274,10 +290,13 @@ public class BoardModel extends JPanel {
         }
     }
 
+    // Sets the Frame associated with the BoardModel
     public void setFrame(JFrame frame){
         this.frame = frame;
     }
     
+    // Explanation
+    // Worked on by : 
     public void flipBoard() {
         flipped = !flipped;
         draw();

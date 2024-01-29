@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,17 +23,18 @@ import model.pieces.Point;
 import model.pieces.Sun;
 import model.pieces.Time;
 
+// MenuBar class creates a custom JMenuBar to be used in program
 
 public class MenuBar extends JMenuBar implements ActionListener{
 
-    JMenu options;
-    JMenuItem saveGame;
-    JMenuItem loadGame;
-    ImageIcon downIcon;
+    private JMenu options;
+    private JMenuItem saveGame;
+    private JMenuItem loadGame;
+    private ImageIcon downIcon;
 
-    Board board;
-    Piece[][] boardTiles;
-    BoardModel boardModel;
+    private Board board;
+    private Piece[][] boardTiles;
+    private BoardModel boardModel;
 
     MenuBar(Board board, BoardModel boardModel){
         this.board = board;
@@ -56,10 +56,12 @@ public class MenuBar extends JMenuBar implements ActionListener{
         }
         
         options.add(saveGame);
-        options.add(loadGame);
+        options.add(loadGame);        
         this.add(options);
     }
 
+    // Perform actions associated with respective selected options
+    // Worked on by : Azhan
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveGame){
@@ -69,6 +71,8 @@ public class MenuBar extends JMenuBar implements ActionListener{
         }
     }
     
+    // Saves the game data onto a file
+    // Worked on by : Azhan
     public void saveGameState(){
         JFileChooser fileChooser = new JFileChooser();
         int userSelection = fileChooser.showSaveDialog(this);
@@ -98,6 +102,8 @@ public class MenuBar extends JMenuBar implements ActionListener{
         }
     }
 
+    // Loads saved game data
+    // Worked on by : Azhan
     public void loadGameState(){
         JFileChooser fileChooser = new JFileChooser();
         int userSelection = fileChooser.showOpenDialog(this);
@@ -108,7 +114,6 @@ public class MenuBar extends JMenuBar implements ActionListener{
                 String line;
                 int row = 0;
                 while ((line = reader.readLine()) != null && row < 43) {
-
                     if(row == 0){
                         String currentPlayer = line;
                         boardModel.setCurrentPlayer(currentPlayer);
@@ -138,6 +143,8 @@ public class MenuBar extends JMenuBar implements ActionListener{
         boardModel.draw();
     }
 
+    // Creates and returns a new piece based on given piece type and piece color
+    // Worked on by : Azhan
     public Piece getNewPiece(String pieceType, String pieceColor){
         switch(pieceType){
             case "plus":

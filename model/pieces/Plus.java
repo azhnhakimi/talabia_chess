@@ -5,6 +5,9 @@ import java.util.Arrays;
 
 import model.Position;
 
+// Plus class represents the Plus piece in the game
+// Class created by : Azhan
+
 public class Plus extends Piece {
     
     String pieceType = "plus";
@@ -14,9 +17,11 @@ public class Plus extends Piece {
         super.setPieceType(this.pieceType);
     }
 
+    // Gets the possible moves that the Plus piece can move
     @Override
     public ArrayList<Position> getPossibleMoves() {
-                Position position = this.getCurrentPosition();
+
+        Position position = this.getCurrentPosition();
 
         int row = position.getRow();
         int column = position.getColumn();
@@ -45,7 +50,6 @@ public class Plus extends Piece {
             new Position(row , column + 5), // move 5 right
             new Position(row , column + 6)  // move 6 right
         ));
-
         return possibleMoves;
     }
     
