@@ -62,7 +62,7 @@ public class MenuBar extends JMenuBar implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveGame){
-            saveGameState();            
+            saveGameState();          
         }else if(e.getSource() == loadGame){
             loadGameState();
         }
@@ -71,8 +71,10 @@ public class MenuBar extends JMenuBar implements ActionListener{
     public void saveGameState(){
         JFileChooser fileChooser = new JFileChooser();
         int userSelection = fileChooser.showSaveDialog(this);
+        String currentPlayer = boardModel.getCurrentPlayer();
         if(userSelection == JFileChooser.APPROVE_OPTION){
             try (FileWriter writer = new FileWriter(fileChooser.getSelectedFile())) {
+                writer.write(currentPlayer + "\n");
                 for (int row = 0; row < 6; row++) {
                     for (int col = 0; col < 7; col++) {
                         Piece piece = boardTiles[row][col];
@@ -104,7 +106,15 @@ public class MenuBar extends JMenuBar implements ActionListener{
                 board.clearBoard();
                 String line;
                 int row = 0;
-                while ((line = reader.readLine()) != null && row < 42) {
+                while ((line = reader.readLine()) != null && row < 43) {
+
+                    if(row == 0){
+                        String currentPlayer = line;
+                        boardModel.setCurrentPlayer(currentPlayer);
+                        row++;
+                        continue;
+                    }
+                    
                     String[] tokens = line.split(" ");
                     for (int col = 0; col < tokens.length; col += 4) {
                         int pieceRow = Integer.parseInt(tokens[col]);

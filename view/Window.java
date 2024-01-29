@@ -22,7 +22,7 @@ public class Window extends JFrame{
         this.setSize(new Dimension(700, 700));
         this.setTitle("Talabia Chess");
         this.setResizable(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.addComponentListener(new ResizeAdapter(this));
         this.addWindowStateListener(this::handleWindowStateChange);
@@ -39,6 +39,7 @@ public class Window extends JFrame{
     private void createNewGame(){
         this.game = new Game();
         this.boardModel = game.getBoardModel();
+        this.boardModel.setFrame(this);
         this.add(boardModel);
         game.playGame();
     }

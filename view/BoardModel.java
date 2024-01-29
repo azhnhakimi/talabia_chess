@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class BoardModel extends JPanel {
 
+    JFrame frame;
     Board board;
     int rows;
     int columns;
@@ -149,13 +150,16 @@ public class BoardModel extends JPanel {
     }
 
     private boolean isValidPosition(Position position) {
-        return position.getRow() >= 0 && position.getRow() < rows &&
-               position.getColumn() >= 0 && position.getColumn() < columns;
+        return position.getRow() >= 0 && position.getRow() < rows && position.getColumn() >= 0 && position.getColumn() < columns;
     }
 
     // Method to get the current player
     public String getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void setCurrentPlayer(String currentPlayer){
+        this.currentPlayer = currentPlayer;
     }
 
     // Method to switch the current player
@@ -166,8 +170,9 @@ public class BoardModel extends JPanel {
 
     private void endGame() {
         // Display a dialog box indicating the game is over and which player won
-        JOptionPane.showMessageDialog(this, "HABIS DAHH!!!! " + currentPlayer.toUpperCase() + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
+        JOptionPane.showMessageDialog(this, "Winner Winner Chicken Dinner! " + currentPlayer.toUpperCase() + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        frame.dispose();
+        // System.exit(0);
     }
 
     // Helper method to rotate an ImageIcon
@@ -189,6 +194,12 @@ public class BoardModel extends JPanel {
     public void draw() {
         removeAll();
         int startRow, endRow, rowIncrement, startColumn, endColumn, columnIncrement;
+
+        if(currentPlayer.equals("white")){
+            flipped = false;
+        }else if(currentPlayer.equals("black")){
+            flipped = true;
+        }
     
         if (flipped) {
             startRow = rows - 1;
@@ -261,6 +272,10 @@ public class BoardModel extends JPanel {
                 }
             }
         }
+    }
+
+    public void setFrame(JFrame frame){
+        this.frame = frame;
     }
     
     public void flipBoard() {
