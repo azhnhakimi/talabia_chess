@@ -20,8 +20,8 @@ public class TutorialFrame extends JFrame{
         initComponents();
     }
 
-    // Explanation
-    // Worked on by : 
+    // This is the settings to open the Tutorial Frame for the game.
+    // Worked on by : Yasmin
     private void initComponents(){
 
         // this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
