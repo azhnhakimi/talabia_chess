@@ -206,7 +206,7 @@ public class BoardModel extends JPanel {
     }
 
     // Draws the pieces, tiles onto the board
-    // Worked on by : Azhan, Syed
+    // Worked on by : Azhan, Syed, Balqis
     public void draw() {
         removeAll();
         int startRow, endRow, rowIncrement, startColumn, endColumn, columnIncrement;
@@ -271,7 +271,7 @@ public class BoardModel extends JPanel {
     }
     
     // Iterate through all pieces on the board and switch their types
-    // Worked on by : 
+    // Worked on by : Balqis
     private void switchPieceTypes() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -296,8 +296,8 @@ public class BoardModel extends JPanel {
         this.frame = frame;
     }
     
-    // Explanation
-    // Worked on by : 
+    // Boards flip for each player
+    // Worked on by : Balqis
     public void flipBoard() {
         flipped = !flipped;
         draw();
