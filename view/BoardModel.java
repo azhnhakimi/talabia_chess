@@ -87,7 +87,7 @@ public class BoardModel extends JPanel {
     }
 
     // Move a piece to specified tile
-    // Worked on by : Syed
+    // Worked on by : Syed, Hafizul
     public void movePieceTo(Tile destinationTile) {
         if (destinationTile.getBackground().equals(new Color(0x00ff00))) {
             Position startPos = clickedTile.getPosition();

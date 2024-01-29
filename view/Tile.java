@@ -81,7 +81,7 @@ public class Tile extends JPanel {
     }
 
     // Handles mouse clicks on the tile, enabling piece movement and selection
-    // Worked on by : Syed
+    // Worked on by : Syed, Hafizul
     private class ClickListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
