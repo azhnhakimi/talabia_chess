@@ -4,15 +4,15 @@ import javax.swing.JPanel;
 
 import java.awt.*;
 
-// Explanation
+// This to make gradient coloured picture.
 
 public class JPanelGradient extends JPanel {
     
     private Color colorStart = Color.BLACK;
     private Color colorEnd = Color.WHITE;
 
-    // Explanation
-    // Worked on by : 
+    // This JPanelGradient is what makes the MainMenu window have a gradient coloured background.
+    // Worked on by : Yasmin
     @Override
     public void paintComponent(Graphics g){
         super.paintComponents(g);
@@ -22,26 +22,26 @@ public class JPanelGradient extends JPanel {
         g2d.fillRect(0, 0, getWidth(), getHeight());
     }
 
-    // Explanation
-    // Worked on by : 
+    // This is where the color starts. 
+    // Worked on by :Yasmin 
     public Color getColorStart(){
         return colorStart;
     }
 
-    // Explanation
-    // Worked on by : 
+    // This is where you can choose your color of choosing from the start.
+    // Worked on by : Yasmin
     public void setColorStart(Color colorStart){
         this.colorStart = colorStart;
     }
 
-    // Explanation
-    // Worked on by : 
+    // This is where the color ends
+    // Worked on by : Yasmin
     public Color getColorEnd(){
         return this.colorEnd;
     }
 
-    // Explanation
-    // Worked on by : 
+    // This is where you can choose your color of choosing at the end.
+    // Worked on by : Yasmin
     public void setColorEnd(Color colorEnd){
         this.colorEnd = colorEnd;
     }
