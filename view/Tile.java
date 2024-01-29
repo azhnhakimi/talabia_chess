@@ -34,19 +34,19 @@ public class Tile extends JPanel {
     }
 
     // Gets the position in which the tile is on
-    // Worked on by :
+    // Worked on by : Syed
     public Position getPosition() {
         return position;
     }
 
-    // Explanation
-    // Worked on by : 
+    // Sets the position of the tile on the board
+    // Worked on by : Syed
     public void setPosition(Position position) {
         this.position = position;
     }
 
-    // Explanation
-    // Worked on by : 
+    // Sets the piece on the tile
+    // Worked on by : Syed
     public void setPiece(Piece piece) {
         this.piece = piece;
         if (this.piece != null) {
@@ -55,21 +55,21 @@ public class Tile extends JPanel {
         updateImage();
     }
 
-    // Explanation
-    // Worked on by : 
+    // Gets the piece currently on the tile
+    // Worked on by : Syed
     public Piece getPiece() {
         return piece;
     }
 
-    // Explanation
-    // Worked on by : 
+    // Sets the image displayed on the tile
+    // Worked on by : Syed
     public void setImage(ImageIcon image) {
         this.image = image;
         updateImage();
     }
 
-    // Explanation
-    // Worked on by : 
+    // Updates the image displayed on the tile
+    // Worked on by : Syed
     private void updateImage() {
         removeAll();
         if (image != null) {
@@ -80,8 +80,8 @@ public class Tile extends JPanel {
         repaint();
     }
 
-    // Explanation
-    // Worked on by : 
+    // Handles mouse clicks on the tile, enabling piece movement and selection
+    // Worked on by : Syed
     private class ClickListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {

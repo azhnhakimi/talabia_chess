@@ -54,21 +54,21 @@ public class BoardModel extends JPanel {
         }
     }
 
-    // Explanation
-    // Worked on by : 
+    // Check if a piece been moved during a turn
+    // Worked on by : Syed
     public boolean hasMovedPiece() {
         return hasMovedPiece;
     }
 
-    // Explanation
-    // Worked on by : 
+    // Updates whether a piece has been moved during the current turn and keep tracked of the clicked tile
+    // Worked on by : Syed
     public void setHasMovedPiece(boolean hasMoved, Tile clicked) {
         this.hasMovedPiece = hasMoved;
         this.clickedTile = clicked; 
     } 
 
     // Shows visibly on the tiles where a piece can move to 
-    // Worked on by : 
+    // Worked on by : Azhan, Syed
     public void seePossibleMoves(ArrayList<Position> possiblePositions, Tile tileClickedOn) {
         resetTileBackgrounds();
         this.clickedTile = tileClickedOn;
@@ -86,8 +86,8 @@ public class BoardModel extends JPanel {
         }
     }
 
-    // Explanation
-    // Worked on by : 
+    // Move a piece to specified tile
+    // Worked on by : Syed
     public void movePieceTo(Tile destinationTile) {
         if (destinationTile.getBackground().equals(new Color(0x00ff00))) {
             Position startPos = clickedTile.getPosition();
@@ -124,8 +124,8 @@ public class BoardModel extends JPanel {
         }
     }
 
-    // Explanation
-    // Worked on by : 
+    // Check if the path between two position is clear for a moving piece
+    // Worked on by : Syed
     private boolean isPathClear(Position start, Position end, Piece movingPiece) {
         // Calculate the direction of movement
         int rowDirection = Integer.compare(end.getRow(), start.getRow());
@@ -146,8 +146,8 @@ public class BoardModel extends JPanel {
         return true; // Path is clear
     }
 
-    // Explanation
-    // Worked on by : 
+    // Reset the background colour of all tiles to the default colour
+    // Worked on by : Syed
     public void resetTileBackgrounds() {
         for (Tile[] row : tiles) {
             for (Tile tile : row) {
@@ -156,26 +156,26 @@ public class BoardModel extends JPanel {
         }
     }
 
-    // Explanation
-    // Worked on by : 
+    // Check if a position is within bound of the board
+    // Worked on by : Syed
     private boolean isValidPosition(Position position) {
         return position.getRow() >= 0 && position.getRow() < rows && position.getColumn() >= 0 && position.getColumn() < columns;
     }
 
     // Method to get the current player
-    // Worked on by : 
+    // Worked on by : Syed
     public String getCurrentPlayer() {
         return currentPlayer;
     }
 
-    // Explanation
-    // Worked on by : 
+    // Sets the current player
+    // Worked on by : Syed
     public void setCurrentPlayer(String currentPlayer){
         this.currentPlayer = currentPlayer;
     }
 
     // Method to switch the current player
-    // Worked on by : 
+    // Worked on by : Syed
     private void switchPlayerTurn() {
         currentPlayer = (currentPlayer.equals("white")) ? "black" : "white";
         flipBoard();
@@ -189,7 +189,7 @@ public class BoardModel extends JPanel {
     }
 
     // Helper method to rotate an ImageIcon
-    // Worked on by : 
+    // Worked on by : Syed
     public ImageIcon rotateImageIcon(ImageIcon icon, double degrees) {
         int width = icon.getIconWidth();
         int height = icon.getIconHeight();
@@ -206,7 +206,7 @@ public class BoardModel extends JPanel {
     }
 
     // Draws the pieces, tiles onto the board
-    // Worked on by : Azhan
+    // Worked on by : Azhan, Syed
     public void draw() {
         removeAll();
         int startRow, endRow, rowIncrement, startColumn, endColumn, columnIncrement;

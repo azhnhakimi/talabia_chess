@@ -17,20 +17,20 @@ public class Point extends Piece {
         super.setPieceType(this.pieceType);
     }
 
-    // Explanation
-    // Worked on by : 
+    // Check if the Point piece is rotated or not
+    // Worked on by : Syed
     public boolean isRotated() {
         return rotated;
     }
 
-    // Explanation
-    // Worked on by : 
+    // Allow to change the rotation status of the Point Piece
+    // Worked on by : Syed
     public void setRotated(boolean rotated) {
         this.rotated = rotated;
     }
 
     // Gets the possible moves that the Point piece can move
-    // Worked on by : 
+    // Worked on by : Syed
     @Override
     public ArrayList<Position> getPossibleMoves() {
         Position position = this.getCurrentPosition();
