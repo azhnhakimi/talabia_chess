@@ -23,7 +23,7 @@ public class JPanelGradient extends JPanel {
     }
 
     // This is where the color starts. 
-    // Worked on by :Yasmin 
+    // Worked on by : Yasmin 
     public Color getColorStart(){
         return colorStart;
     }

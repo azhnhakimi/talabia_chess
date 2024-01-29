@@ -291,6 +291,7 @@ public class BoardModel extends JPanel {
     }
 
     // Sets the Frame associated with the BoardModel
+    // Worked on by : Azhan
     public void setFrame(JFrame frame){
         this.frame = frame;
     }
