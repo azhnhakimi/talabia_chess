@@ -182,7 +182,7 @@ public class BoardModel extends JPanel {
     }
 
     // Shows a message dialog when game has ended
-    // Worked on by : Azhan
+    // Worked on by : Azhan, Syed
     private void endGame() {
         JOptionPane.showMessageDialog(this, "Winner Winner Chicken Dinner! " + currentPlayer.toUpperCase() + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
         frame.dispose();
