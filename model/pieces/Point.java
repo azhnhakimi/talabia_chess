@@ -30,7 +30,7 @@ public class Point extends Piece {
     }
 
     // Gets the possible moves that the Point piece can move
-    // Worked on by : Syed
+    // Worked on by : Balqis, Syed
     @Override
     public ArrayList<Position> getPossibleMoves() {
         Position position = this.getCurrentPosition();
