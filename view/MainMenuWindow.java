@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-// Explanation
+//This is the MainMenu Window where you will be greeted on when you run the game file
 
 public class MainMenuWindow extends JFrame {
 
@@ -27,8 +27,9 @@ public class MainMenuWindow extends JFrame {
         initComponents();
     }
 
-    // Explanation
-    // Worked on by : 
+    // This is the layout settings of the MainMenu Window which has the Title and 3 buttons along with it . 
+    // First Button : New Game , Second Button : Load Game , Third Button : Tutorial.
+    // Worked on by : Yasmin 
     private void initComponents(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
