@@ -42,7 +42,6 @@ public class Board {
     }
 
     public void initializeBoard() {
-        System.out.println("Begin the game!");
 
         // Initialize black pieces
         for (int col = 0; col < 7; col++) {

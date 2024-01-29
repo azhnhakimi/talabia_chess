@@ -12,6 +12,7 @@ public class Window extends JFrame{
 
     Game game;
     BoardModel boardModel;
+    MenuBar menuBar;
 
     int BOARD_WIDTH = 560;
     int BOARD_HEIGHT = 480;
@@ -29,19 +30,25 @@ public class Window extends JFrame{
         getContentPane().setBackground(new Color(0x292625));
         
         createNewGame();
+
+        menuBar = new MenuBar(this.game.getBoard(), this.boardModel);
         
-        this.setJMenuBar(new MenuBar(this.game.getBoard(), this.boardModel));
+        this.setJMenuBar(menuBar);
         
         resizeContentPanel();
         this.setVisible(true);
     }
 
-    private void createNewGame(){
+    public void createNewGame(){
         this.game = new Game();
         this.boardModel = game.getBoardModel();
         this.boardModel.setFrame(this);
         this.add(boardModel);
         game.playGame();
+    }
+
+    public void loadOldGame(){
+        menuBar.loadGameState();
     }
 
 

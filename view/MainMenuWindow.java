@@ -122,7 +122,8 @@ public class MainMenuWindow extends JFrame {
     }
 
     private void loadGameActionPerformed(ActionEvent e){
-        
+        Window window = new Window();
+        window.loadOldGame();
     }
 
     private void tutorialMouseClicked(MouseEvent e){
